@@ -6,9 +6,27 @@ export const NewMovie = () => {
   const [title, setTitle] = useState('');
   const [hasTitleError, setHasTitleError] = useState(false);
 
-  const handleTitleChange = (newValue: string) => {
-    setTitle(newValue);
+  const [desctiption, setDesctiption] = useState('');
+  const [hasdesctiptionError, setHasDesctiptionError] = useState(false);
+
+  const [imageUrl, setImageUrl] = useState('');
+  const [hasimageUrlError, setHasImageUrlError] = useState(false);
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
     setHasTitleError(false);
+  };
+
+  const handleDesctiptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDesctiption(event.target.value);
+    setHasDesctiptionError(false);
+  };
+
+  const handleImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageUrl(event.target.value);
+    setHasImageUrlError(false);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -16,6 +34,12 @@ export const NewMovie = () => {
 
     if (!title) {
       setHasTitleError(true);
+
+      return;
+    }
+
+    if (!desctiption) {
+      setHasDesctiptionError(true);
 
       return;
     }
@@ -28,14 +52,25 @@ export const NewMovie = () => {
       <TextField
         name="title"
         label="Title"
-        value=""
+        value={title}
         onChange={handleTitleChange}
         required
+        hasError={hasTitleError}
       />
 
-      <TextField name="description" label="Description" value="" />
+      <TextField
+        name="description"
+        label="Description"
+        value=""
+        onChange={handleDesctiptionChange}
+      />
 
-      <TextField name="imgUrl" label="Image URL" value="" />
+      <TextField
+        name="imgUrl"
+        label="Image URL"
+        value=""
+        onChange={handleImageUrlChange}
+      />
 
       <TextField name="imdbUrl" label="Imdb URL" value="" />
 
