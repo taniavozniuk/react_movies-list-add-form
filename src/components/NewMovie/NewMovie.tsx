@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { TextField } from '../TextField';
+type Props = {
+  onSubmit: (post: Props) => void;
+};
 
-export const NewMovie = () => {
-  const [count] = useState(0);
+export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
+  const [count, setCount] = useState(0);
   const [title, setTitle] = useState('');
   const [hasTitleError, setHasTitleError] = useState(false);
 
@@ -10,39 +13,65 @@ export const NewMovie = () => {
   const [hasdesctiptionError, setHasDesctiptionError] = useState(false);
 
   const [imageUrl, setImageUrl] = useState('');
-  const [hasimageUrlError, setHasImageUrlError] = useState(false);
+  const [hasImageUrlError, setHasImageUrlError] = useState(false);
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+  const [imdbUrl, setImdbdUrl] = useState('');
+  const [hasImdbUrlError, setHasImdbUrlError] = useState(false);
+
+  const [imdbID, setImdbID] = useState('');
+  const [hasImdbIDError, setHasImdbIDError] = useState(false);
+
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
     setHasTitleError(false);
   };
 
-  const handleDesctiptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setDesctiption(event.target.value);
+  const handleDesctiptionChange = (value: string) => {
+    setDesctiption(value);
     setHasDesctiptionError(false);
   };
 
-  const handleImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(event.target.value);
+  const handleImageUrlChange = (value: string) => {
+    setImageUrl(value);
     setHasImageUrlError(false);
+  };
+
+  const handleImdbUrlChange = (value: string) => {
+    setImdbdUrl(value);
+    setHasImdbUrlError(false);
+  };
+
+  const handleImdbIDChange = (value: string) => {
+    setImdbID(value);
+    setHasImdbIDError(false);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!title) {
-      setHasTitleError(true);
+    setHasTitleError(!title);
+    setHasDesctiptionError(!desctiption);
+    setHasImageUrlError(!imageUrl);
+    setHasImdbUrlError(!imdbUrl);
+    setHasImdbIDError(!imdbID);
 
+    if (!title || !desctiption || !imageUrl || !imdbUrl || !imdbID) {
       return;
     }
 
-    if (!desctiption) {
-      setHasDesctiptionError(true);
-
-      return;
-    }
+    onSubmit({
+      title,
+      desctiption,
+      imageUrl,
+      imdbUrl,
+      imdbID,
+    });
+    setTitle('');
+    setDesctiption('');
+    setImageUrl('');
+    setImdbdUrl('');
+    setImdbID('');
+    setCount(prevCount => prevCount + 1);
   };
 
   return (
@@ -55,26 +84,44 @@ export const NewMovie = () => {
         value={title}
         onChange={handleTitleChange}
         required
-        hasError={hasTitleError}
+        error={hasTitleError}
       />
 
       <TextField
         name="description"
         label="Description"
-        value=""
+        value={desctiption}
         onChange={handleDesctiptionChange}
+        required
+        error={hasdesctiptionError}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
-        value=""
+        value={imageUrl}
         onChange={handleImageUrlChange}
+        required
+        error={hasImageUrlError}
       />
 
-      <TextField name="imdbUrl" label="Imdb URL" value="" />
+      <TextField
+        name="imdbUrl"
+        label="Imdb URL"
+        value={imdbUrl}
+        onChange={handleImdbUrlChange}
+        required
+        error={hasImdbUrlError}
+      />
 
-      <TextField name="imdbId" label="Imdb ID" value="" />
+      <TextField
+        name="imdbId"
+        label="Imdb ID"
+        value={imdbID}
+        onChange={handleImdbIDChange}
+        required
+        error={hasImdbIDError}
+      />
 
       <div className="field is-grouped">
         <div className="control">
