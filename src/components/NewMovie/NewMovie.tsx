@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { TextField } from '../TextField';
+import { Movie } from '../../types/Movie';
 type Props = {
-  onSubmit: (post: Props) => void;
+  onAdd: (movie: Movie) => void;
 };
 
-export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
+export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [count, setCount] = useState(0);
   const [title, setTitle] = useState('');
   const [hasTitleError, setHasTitleError] = useState(false);
@@ -59,12 +60,12 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       return;
     }
 
-    onSubmit({
+    onAdd({
       title,
       desctiption,
       imageUrl,
       imdbUrl,
-      imdbID,
+      imdbId: imdbID,
     });
     setTitle('');
     setDesctiption('');
