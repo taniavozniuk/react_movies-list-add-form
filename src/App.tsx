@@ -6,7 +6,9 @@ import { useState } from 'react';
 
 export const App = () => {
   function getImageById(imdbID: string): string | null {
-    return moviesFromServer.find(movie => movie.imdbId === imdbID) || null;
+    return (
+      moviesFromServer.find(movie => movie.imdbId === imdbID)?.imgUrl || null
+    );
   }
 
   const [movies, setMovies] = useState(moviesFromServer);
