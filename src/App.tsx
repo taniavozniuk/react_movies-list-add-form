@@ -3,6 +3,7 @@ import { MoviesList } from './components/MoviesList';
 import { NewMovie } from './components/NewMovie';
 import moviesFromServer from './api/movies.json';
 import { useState } from 'react';
+import { Movie } from './types/Movie';
 
 export const App = () => {
   function getImageById(imdbID: string): string | null {
@@ -14,7 +15,7 @@ export const App = () => {
   const [movies, setMovies] = useState(moviesFromServer);
 
   // функція для додавання нового фільму
-  const handleAddMovie = (movie: any) => {
+  const handleAddMovie = (movie: Movie) => {
     // отримую зображення для нового фільму
     const imageUrl = getImageById(movie.imdbId);
     const newMovie = { ...movie, imageUrl }; //додаю зображення до фільму

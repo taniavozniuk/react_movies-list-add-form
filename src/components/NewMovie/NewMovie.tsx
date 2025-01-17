@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField } from '../TextField';
 import { Movie } from '../../types/Movie';
 type Props = {
@@ -10,17 +10,30 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [title, setTitle] = useState('');
   const [hasTitleError, setHasTitleError] = useState(false);
 
-  const [desctiption, setDesctiption] = useState('');
+  const [description, setDescription] = useState('');
   const [hasdesctiptionError, setHasDesctiptionError] = useState(false);
 
-  const [imageUrl, setImageUrl] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
   const [hasImageUrlError, setHasImageUrlError] = useState(false);
 
   const [imdbUrl, setImdbdUrl] = useState('');
   const [hasImdbUrlError, setHasImdbUrlError] = useState(false);
 
-  const [imdbID, setImdbID] = useState('');
+  const [imdbId, setImdbID] = useState('');
   const [hasImdbIDError, setHasImdbIDError] = useState(false);
+
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
+  useEffect(() => {
+    const allFieldsFilled =
+      title.trim() &&
+      description.trim() &&
+      imgUrl.trim() &&
+      imdbId.trim() &&
+      imdbId.trim();
+
+    setIsSubmitDisabled(!allFieldsFilled);
+  }, [title, description, imgUrl, imdbId, imdbUrl]);
 
   const handleTitleChange = (value: string) => {
     setTitle(value);
@@ -28,12 +41,12 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   };
 
   const handleDesctiptionChange = (value: string) => {
-    setDesctiption(value);
+    setDescription(value);
     setHasDesctiptionError(false);
   };
 
   const handleImageUrlChange = (value: string) => {
-    setImageUrl(value);
+    setImgUrl(value);
     setHasImageUrlError(false);
   };
 
@@ -51,25 +64,26 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     event.preventDefault();
 
     setHasTitleError(!title);
-    setHasDesctiptionError(!desctiption);
-    setHasImageUrlError(!imageUrl);
+    setHasDesctiptionError(!description);
+    setHasImageUrlError(!imgUrl);
     setHasImdbUrlError(!imdbUrl);
-    setHasImdbIDError(!imdbID);
+    setHasImdbIDError(!imdbId);
 
-    if (!title || !desctiption || !imageUrl || !imdbUrl || !imdbID) {
+    if (!title || !description || !imgUrl || !imdbUrl || !imdbId) {
       return;
     }
 
     onAdd({
       title,
       description,
-      imageUrl,
+      imgUrl,
       imdbUrl,
-      imdbId: imdbID,
+      imdbId,
     });
+
     setTitle('');
-    setDesctiption('');
-    setImageUrl('');
+    setDescription('');
+    setImgUrl('');
     setImdbdUrl('');
     setImdbID('');
     setCount(prevCount => prevCount + 1);
@@ -91,7 +105,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       <TextField
         name="description"
         label="Description"
-        value={desctiption}
+        value={description}
         onChange={handleDesctiptionChange}
         required
         error={hasdesctiptionError}
@@ -100,7 +114,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       <TextField
         name="imgUrl"
         label="Image URL"
-        value={imageUrl}
+        value={imgUrl}
         onChange={handleImageUrlChange}
         required
         error={hasImageUrlError}
@@ -118,7 +132,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
       <TextField
         name="imdbId"
         label="Imdb ID"
-        value={imdbID}
+        value={imdbId}
         onChange={handleImdbIDChange}
         required
         error={hasImdbIDError}
@@ -130,6 +144,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
+            disabled={isSubmitDisabled}
           >
             Add
           </button>
