@@ -26,14 +26,10 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
 
   useEffect(() => {
     const allFieldsFilled =
-      title.trim() &&
-      description.trim() &&
-      imgUrl.trim() &&
-      imdbId.trim() &&
-      imdbId.trim();
+      title.trim() && imgUrl.trim() && imdbUrl.trim() && imdbId.trim();
 
     setIsSubmitDisabled(!allFieldsFilled);
-  }, [title, description, imgUrl, imdbId, imdbUrl]);
+  }, [title, imgUrl, imdbId, imdbUrl]);
 
   const handleTitleChange = (value: string) => {
     setTitle(value);
@@ -64,12 +60,12 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     event.preventDefault();
 
     setHasTitleError(!title);
-    setHasDesctiptionError(!description);
+    // setHasDesctiptionError(!description);
     setHasImageUrlError(!imgUrl);
     setHasImdbUrlError(!imdbUrl);
     setHasImdbIDError(!imdbId);
 
-    if (!title || !description || !imgUrl || !imdbUrl || !imdbId) {
+    if (!title || !imgUrl || !imdbUrl || !imdbId) {
       return;
     }
 
