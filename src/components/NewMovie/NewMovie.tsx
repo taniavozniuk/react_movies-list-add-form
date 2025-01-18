@@ -11,12 +11,12 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [hasTitleError, setHasTitleError] = useState(false);
 
   const [description, setDescription] = useState('');
-  const [hasdesctiptionError, setHasDesctiptionError] = useState(false);
+  const [hasDescriptionError, setHasDesctiptionError] = useState(false);
 
   const [imgUrl, setImgUrl] = useState('');
   const [hasImageUrlError, setHasImageUrlError] = useState(false);
 
-  const [imdbUrl, setImdbdUrl] = useState('');
+  const [imdbUrl, setImdbUrl] = useState('');
   const [hasImdbUrlError, setHasImdbUrlError] = useState(false);
 
   const [imdbId, setImdbID] = useState('');
@@ -47,7 +47,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   };
 
   const handleImdbUrlChange = (value: string) => {
-    setImdbdUrl(value);
+    setImdbUrl(value);
     setHasImdbUrlError(false);
   };
 
@@ -60,7 +60,6 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     event.preventDefault();
 
     setHasTitleError(!title);
-    // setHasDesctiptionError(!description);
     setHasImageUrlError(!imgUrl);
     setHasImdbUrlError(!imdbUrl);
     setHasImdbIDError(!imdbId);
@@ -80,7 +79,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
     setTitle('');
     setDescription('');
     setImgUrl('');
-    setImdbdUrl('');
+    setImdbUrl('');
     setImdbID('');
     setCount(prevCount => prevCount + 1);
   };
@@ -104,7 +103,7 @@ export const NewMovie: React.FC<Props> = ({ onAdd }) => {
         value={description}
         onChange={handleDesctiptionChange}
         required
-        error={hasdesctiptionError}
+        error={hasDescriptionError}
       />
 
       <TextField
